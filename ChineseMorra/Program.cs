@@ -5,10 +5,10 @@
         static void Main(string[] args)
         {
             Random rand = new();
-            int winPoint = 4; 
+            int winPoint = 5; 
             int userPoint = 0;
             int computerPoint = 0;
-            bool game = false;
+            bool EndGame = false;
             string winner;
 
             do
@@ -17,16 +17,16 @@
 
                 try
                 {
-                    string[] word = ["Rock", "Paper", "Scissors"];
+                    string[] word = ["Rock", "Scissors","Paper"];
                     Console.WriteLine("Choose your preference:\n1 Rock.\n2 Scissors\n3 Paper.");
                     int userChoice = Convert.ToInt32(Console.ReadLine());
                     int computerChoice = rand.Next(1, 4);
 
                     Console.WriteLine("User: " + word[userChoice - 1] + "\nComputer: " + word[computerChoice - 1]);
 
-                    if (userPoint == winPoint || computerPoint == winPoint || userChoice > 3)
+                    if (userChoice > 3)
                     { 
-                        game = true; 
+                        EndGame = true; 
                     } else
                     {
 
@@ -37,16 +37,18 @@
                         {
                             if ((userChoice == 1 && computerChoice != 2) || (userChoice == 2 && computerChoice != 3) || (userChoice == 3 && computerChoice != 1))
                             {
-                                Console.WriteLine("User Win!");
-                                userPoint++;
+                                Console.WriteLine("Computer Win!");
+                                ++computerPoint;
+
                             }
                             else
                             {
-                                Console.WriteLine("Computer Win!");
-                                computerPoint++;
+                                Console.WriteLine("User Win!");
+                                ++userPoint;
                             }
                         }
                     }
+                    if(userPoint == winPoint || computerPoint == winPoint) EndGame = true;
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                     Console.Clear();
@@ -56,7 +58,7 @@
                 {
                     Console.WriteLine("Please insert a number!\n" + e.Message);
                 }
-            } while (!game);
+            } while (!EndGame);
 
 
             winner = userPoint > computerPoint ? "User." : "Computer.";
